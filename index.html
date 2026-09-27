@@ -33,38 +33,13 @@
         }
     </script>
     <style>
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.05);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(59, 130, 246, 0.5);
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(59, 130, 246, 0.8);
-        }
-        .cell-wrap {
-            white-space: pre-wrap;
-            word-break: break-word;
-            min-width: 140px;
-        }
-        .resizer {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 6px;
-            cursor: col-resize;
-            user-select: none;
-            touch-action: none;
-        }
-        .resizer:hover, .resizing {
-            background-color: #3b82f6;
-        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.5); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246, 0.8); }
+        .cell-wrap { white-space: pre-wrap; word-break: break-word; min-width: 140px; }
+        .resizer { position: absolute; right: 0; top: 0; bottom: 0; width: 6px; cursor: col-resize; user-select: none; touch-action: none; }
+        .resizer:hover, .resizing { background-color: #3b82f6; }
     </style>
 </head>
 <body class="h-full font-sans transition-colors duration-200 bg-slate-50 text-slate-800 dark:bg-[#1e1e1e] dark:text-[#d4d4d4] flex flex-col overflow-hidden">
@@ -91,13 +66,13 @@
         </div>
 
         <div class="flex items-center space-x-3">
-            <!-- IST Clock & Date -->
+            <!-- Clock -->
             <div class="hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333333] text-xs font-medium">
                 <i class="fa-regular fa-clock text-blue-600 dark:text-blue-400"></i>
                 <span id="istClock" class="font-mono">--/--/---- --:--:-- IST</span>
             </div>
 
-            <!-- Theme Selector (Light, VS Dark, System) -->
+            <!-- Theme Selector -->
             <select id="themeSelector" onchange="changeTheme(this.value)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-[#333333] bg-white dark:bg-[#1e1e1e] text-xs font-medium focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
                 <option value="light">Clean Light</option>
                 <option value="vs-dark">Visual Studio Dark</option>
@@ -106,15 +81,18 @@
 
             <div class="h-6 w-px bg-slate-200 dark:bg-[#333333]"></div>
 
-            <!-- Global Actions -->
+            <!-- Action Buttons -->
             <div class="flex items-center space-x-2">
+                <button onclick="openZipExportModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium shadow-sm transition-all flex items-center gap-1.5" title="Download ZIP Archive (.dat / .csv / .xlsx)">
+                    <i class="fa-solid fa-file-archive"></i> Download Files Package
+                </button>
                 <button onclick="openImportModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm transition-all flex items-center gap-1.5">
                     <i class="fa-solid fa-cloud-arrow-down"></i> Import / GitHub
                 </button>
-                <button onclick="exportWorkspaceZip()" title="Backup Workspace as ZIP" class="p-2 rounded-lg border border-slate-200 dark:border-[#333333] bg-white dark:bg-[#1e1e1e] hover:bg-slate-100 dark:hover:bg-[#2a2d2e] transition-colors text-slate-700 dark:text-[#d4d4d4] text-xs">
+                <button onclick="exportWorkspaceZip()" title="Backup Workspace" class="p-2 rounded-lg border border-slate-200 dark:border-[#333333] bg-white dark:bg-[#1e1e1e] hover:bg-slate-100 dark:hover:bg-[#2a2d2e] transition-colors text-slate-700 dark:text-[#d4d4d4] text-xs">
                     <i class="fa-solid fa-file-zipper text-blue-600 dark:text-blue-400"></i>
                 </button>
-                <label title="Restore Workspace from ZIP" class="p-2 rounded-lg border border-slate-200 dark:border-[#333333] bg-white dark:bg-[#1e1e1e] hover:bg-slate-100 dark:hover:bg-[#2a2d2e] transition-colors text-slate-700 dark:text-[#d4d4d4] text-xs cursor-pointer">
+                <label title="Restore Workspace" class="p-2 rounded-lg border border-slate-200 dark:border-[#333333] bg-white dark:bg-[#1e1e1e] hover:bg-slate-100 dark:hover:bg-[#2a2d2e] transition-colors text-slate-700 dark:text-[#d4d4d4] text-xs cursor-pointer">
                     <i class="fa-solid fa-folder-open text-blue-600 dark:text-blue-400"></i>
                     <input type="file" accept=".zip" class="hidden" onchange="importWorkspaceZip(event)">
                 </label>
@@ -123,8 +101,7 @@
     </header>
 
     <div class="flex-1 flex overflow-hidden">
-        
-        <!-- VERTICAL LEFT SIDEBAR FOR TABS -->
+        <!-- Sidebar -->
         <aside id="sidebarPanel" class="w-72 flex-none border-r border-slate-200 dark:border-[#333333] bg-slate-100/70 dark:bg-[#252526] flex flex-col z-10 transition-all duration-200">
             <div class="p-3 border-b border-slate-200 dark:border-[#333333] flex items-center justify-between gap-2">
                 <div class="relative flex-1">
@@ -144,9 +121,9 @@
             </div>
         </aside>
 
-        <!-- MAIN EDITOR & DATA WORKSPACE -->
+        <!-- Main Content Area -->
         <main class="flex-1 flex flex-col overflow-hidden bg-white dark:bg-[#1e1e1e]">
-            <!-- Active File Toolbar -->
+            <!-- File Toolbar -->
             <div id="fileToolbar" class="flex-none px-4 py-2.5 border-b border-slate-200 dark:border-[#333333] bg-slate-50/50 dark:bg-[#252526]/50 flex flex-wrap items-center justify-between gap-3 hidden">
                 <div class="flex items-center space-x-3">
                     <input type="text" id="activeFileName" onchange="updateActiveFileName(this.value)" class="font-bold text-sm bg-transparent border-b border-transparent hover:border-slate-300 dark:hover:border-slate-700 focus:border-blue-500 focus:outline-none px-1 py-0.5">
@@ -155,13 +132,11 @@
                 </div>
 
                 <div class="flex items-center space-x-2 flex-wrap">
-                    <!-- Global Search Filter inside active file -->
                     <div class="relative">
                         <i class="fa-solid fa-filter absolute left-2.5 top-2 text-xs text-slate-400"></i>
                         <input type="text" id="dataFilterInput" placeholder="Filter rows..." oninput="renderActiveView()" class="w-40 pl-7 pr-3 py-1 bg-white dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333333] rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500">
                     </div>
 
-                    <!-- View Mode Toggle -->
                     <div class="bg-slate-200 dark:bg-[#333333] p-0.5 rounded-lg flex text-xs">
                         <button onclick="setViewMode('tabular')" id="btnTabularView" class="px-2.5 py-1 rounded-md font-medium transition-colors bg-white dark:bg-[#1e1e1e] text-blue-600 dark:text-blue-400 shadow-xs">
                             <i class="fa-solid fa-table mr-1"></i> Table
@@ -183,7 +158,6 @@
                         <i class="fa-solid fa-copy"></i> Copy Data
                     </button>
 
-                    <!-- Export Dropdown -->
                     <div class="relative">
                         <button onclick="toggleExportMenu()" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm flex items-center gap-1.5">
                             <i class="fa-solid fa-download"></i> Export <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -203,13 +177,13 @@
                 </div>
             </div>
 
-            <!-- Empty State -->
+            <!-- Empty Workspace View -->
             <div id="emptyState" class="flex-1 flex flex-col items-center justify-center p-8 text-center">
                 <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl mb-4 shadow-inner">
                     <i class="fa-solid fa-folder-open"></i>
                 </div>
                 <h3 class="text-base font-semibold mb-1">No file selected</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mb-6">Create a new file, import local files, or load directly from GitHub raw URLs.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mb-6">Create a new file, import local documents, or load directly from GitHub raw URLs.</p>
                 <div class="flex gap-3">
                     <button onclick="createNewFileModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm">
                         Create New File
@@ -220,7 +194,7 @@
                 </div>
             </div>
 
-            <!-- Tabular View Container -->
+            <!-- Table View Container -->
             <div id="tabularViewContainer" class="flex-1 overflow-auto relative hidden">
                 <table id="dataTable" class="w-full border-collapse text-xs table-fixed">
                     <thead id="tableHead" class="sticky top-0 bg-slate-100 dark:bg-[#252526] z-10 border-b border-slate-200 dark:border-[#333333] shadow-xs"></thead>
@@ -228,15 +202,47 @@
                 </table>
             </div>
 
-            <!-- Vertical Record View Container -->
+            <!-- Record View Container -->
             <div id="verticalViewContainer" class="flex-1 overflow-y-auto p-6 hidden">
                 <div id="verticalRecordsWrapper" class="max-w-4xl mx-auto space-y-6"></div>
             </div>
         </main>
     </div>
 
-    <!-- Modals & Popups -->
-    <!-- Copy Raw Data Modal -->
+    <!-- ZIP Download Customizer Modal -->
+    <div id="zipExportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-[#252526] border border-slate-200 dark:border-[#333333] rounded-2xl w-full max-w-3xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+            <div class="px-6 py-4 border-b border-slate-200 dark:border-[#333333] flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-sm">Download Files Package (ZIP)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Define custom filenames, format extensions, and the ZIP package name before download.</p>
+                </div>
+                <button onclick="closeZipExportModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4">
+                <div>
+                    <label class="text-xs font-semibold mb-1 block">ZIP Archive Filename</label>
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="zipArchiveNameInput" placeholder="oracle_export_files" class="flex-1 px-3 py-2 bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333333] rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono">
+                        <span class="text-xs font-semibold text-slate-400 font-mono">.zip</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs font-semibold mb-2 block">Configure Individual Files:</label>
+                    <div id="zipExportFilesList" class="space-y-2 max-h-60 overflow-y-auto p-2 border border-slate-200 dark:border-[#333333] rounded-xl bg-slate-50/50 dark:bg-[#1e1e1e]"></div>
+                </div>
+            </div>
+            <div class="px-6 py-3 bg-slate-50 dark:bg-[#252526] border-t border-slate-200 dark:border-[#333333] flex justify-end gap-2">
+                <button onclick="closeZipExportModal()" class="px-3 py-1.5 text-xs bg-slate-200 dark:bg-[#333333] rounded-lg">Cancel</button>
+                <button onclick="generateCustomZipExport()" class="px-4 py-1.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow-sm flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-zipper"></i> Generate & Download ZIP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copy Raw Text Modal -->
     <div id="copyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-[#252526] border border-slate-200 dark:border-[#333333] rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col">
             <div class="px-6 py-4 border-b border-slate-200 dark:border-[#333333] flex justify-between items-center">
@@ -260,7 +266,7 @@
         </div>
     </div>
 
-    <!-- Import / GitHub Modal -->
+    <!-- Import Modal -->
     <div id="importModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-[#252526] border border-slate-200 dark:border-[#333333] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col">
             <div class="px-6 py-4 border-b border-slate-200 dark:border-[#333333] flex justify-between items-center">
@@ -290,12 +296,12 @@
         </div>
     </div>
 
-    <!-- File Type Prompt Modal -->
+    <!-- File Format Selector -->
     <div id="fileTypePromptModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-[#252526] border border-slate-200 dark:border-[#333333] rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden flex flex-col">
             <div class="px-6 py-4 border-b border-slate-200 dark:border-[#333333]">
                 <h3 class="font-bold text-sm">Select File Format</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Choose how to parse incoming data.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Choose parsing method for remote text.</p>
             </div>
             <div class="p-6 space-y-3">
                 <button onclick="confirmFileTypeSelection('dat')" class="w-full p-3 bg-slate-100 dark:bg-[#1e1e1e] hover:bg-blue-50 border border-slate-200 dark:border-[#333333] hover:border-blue-500 rounded-xl text-left transition-all flex items-center justify-between group">
@@ -319,7 +325,7 @@
         </div>
     </div>
 
-    <!-- New File Modal -->
+    <!-- New File Dialog -->
     <div id="newFileModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-[#252526] border border-slate-200 dark:border-[#333333] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
             <div class="px-6 py-4 border-b border-slate-200 dark:border-[#333333] flex justify-between items-center">
@@ -351,7 +357,7 @@
         let workspaceFiles = [];
         let activeFileId = null;
         let pendingGitHubContent = null;
-        let columnWidths = {}; // fileId -> [widths]
+        let columnWidths = {};
 
         window.onload = function() {
             initTheme();
@@ -363,7 +369,6 @@
             }
         };
 
-        // Toast Notifications
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -378,7 +383,6 @@
             }, 3000);
         }
 
-        // IST Clock & Date Ticker
         function startISTClock() {
             function updateClock() {
                 const now = new Date();
@@ -390,7 +394,6 @@
             setInterval(updateClock, 1000);
         }
 
-        // Theme Management (Light, VS Dark, System)
         function initTheme() {
             const saved = localStorage.getItem('oracle_studio_theme') || 'system';
             document.getElementById('themeSelector').value = saved;
@@ -410,7 +413,6 @@
                 document.documentElement.classList.remove('dark');
                 document.body.className = "h-full font-sans transition-colors duration-200 bg-slate-50 text-slate-800 flex flex-col overflow-hidden";
             } else {
-                // System
                 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 if (prefersDark) {
                     document.documentElement.classList.add('dark');
@@ -422,7 +424,6 @@
             }
         }
 
-        // Local Storage
         function saveToLocalStorage() {
             localStorage.setItem('oracle_studio_files', JSON.stringify(workspaceFiles));
             localStorage.setItem('oracle_studio_active', activeFileId || '');
@@ -456,7 +457,6 @@
             }
         }
 
-        // Sidebar Toggle
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebarPanel');
             sidebar.classList.toggle('w-72');
@@ -464,7 +464,6 @@
             sidebar.classList.toggle('overflow-hidden');
         }
 
-        // Sidebar Tabs Render
         function renderTabs() {
             const container = document.getElementById('sidebarTabsList');
             const searchVal = (document.getElementById('tabSearch').value || '').toLowerCase();
@@ -563,7 +562,6 @@
             renderTabs();
         }
 
-        // Render Tabular View with Resizable, Reorderable Columns & Row Reordering
         function renderTabularView() {
             const file = getActiveFile();
             if (!file) return;
@@ -572,13 +570,11 @@
             const tbody = document.getElementById('tableBody');
             const filterText = (document.getElementById('dataFilterInput').value || '').toLowerCase();
 
-            // Init column widths if not present
             if (!columnWidths[file.id] || columnWidths[file.id].length !== file.headers.length) {
                 columnWidths[file.id] = file.headers.map(() => 180);
             }
             const widths = columnWidths[file.id];
 
-            // Render Headers with Drag Reorder & Resizer
             let headHtml = `<tr><th class="w-20 px-2 py-2.5 text-center font-mono text-slate-400">Actions</th>`;
             file.headers.forEach((h, colIdx) => {
                 headHtml += `
@@ -595,7 +591,6 @@
             headHtml += `</tr>`;
             thead.innerHTML = headHtml;
 
-            // Filter rows
             const matchedRows = [];
             file.rows.forEach((row, origIdx) => {
                 const rowStr = row.join(' ').toLowerCase();
@@ -609,7 +604,7 @@
                 return;
             }
 
-            tbody.innerHTML = matchedRows.map(({ row, origIdx }, displayIdx) => {
+            tbody.innerHTML = matchedRows.map(({ row, origIdx }) => {
                 let rowHtml = `
                     <tr class="hover:bg-slate-50 dark:hover:bg-[#2a2d2e] transition-colors">
                         <td class="text-center py-2 px-2 whitespace-nowrap">
@@ -625,7 +620,7 @@
                     const val = row[colIdx] !== undefined ? row[colIdx] : '';
                     rowHtml += `
                         <td class="p-2 border-r border-slate-200 dark:border-[#333333] last:border-0 align-top" style="width: ${widths[colIdx]}px;">
-                            <textarea rows="1" oninput="autoExpand(this); updateCell(${origIdx}, ${colIdx}, this.value)" class="w-full bg-transparent border border-transparent hover:border-slate-300 dark:hover:border-slate-700 focus:border-blue-500 focus:bg-white dark:focus:bg-[#1e1e1e] rounded p-1.5 text-xs font-mono cell-wrap resize-none">${escapeHtml(val)}</textarea>
+                            <textarea rows="1" onpaste="handleTablePaste(event, ${origIdx}, ${colIdx})" oninput="autoExpand(this); updateCell(${origIdx}, ${colIdx}, this.value)" class="w-full bg-transparent border border-transparent hover:border-slate-300 dark:hover:border-slate-700 focus:border-blue-500 focus:bg-white dark:focus:bg-[#1e1e1e] rounded p-1.5 text-xs font-mono cell-wrap resize-none">${escapeHtml(val)}</textarea>
                         </td>
                     `;
                 });
@@ -635,6 +630,62 @@
             }).join('');
         }
 
+        function handleTablePaste(event, startRow, startCol) {
+            const clipboardData = (event.clipboardData || window.clipboardData).getData('text');
+            if (!clipboardData) return;
+
+            if (clipboardData.includes('\t') || clipboardData.includes('\n')) {
+                event.preventDefault();
+                const file = getActiveFile();
+                if (!file) return;
+
+                const lines = clipboardData.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+                if (lines.length === 1 && !lines[0].includes('\t')) {
+                    file.rows[startRow][startCol] = lines[0];
+                    renderActiveView();
+                    return;
+                }
+
+                let maxColsNeeded = startCol;
+
+                lines.forEach((line, rOffset) => {
+                    if (line.trim() === '' && rOffset === lines.length - 1) return;
+                    const cells = line.split('\t');
+                    const targetRowIndex = startRow + rOffset;
+
+                    while (file.rows.length <= targetRowIndex) {
+                        file.rows.push(new Array(file.headers.length).fill(''));
+                    }
+
+                    cells.forEach((cellVal, cOffset) => {
+                        const targetColIndex = startCol + cOffset;
+                        if (targetColIndex + 1 > maxColsNeeded) {
+                            maxColsNeeded = targetColIndex + 1;
+                        }
+
+                        while (file.headers.length <= targetColIndex) {
+                            const newColName = 'Column_' + (file.headers.length + 1);
+                            file.headers.push(newColName);
+                            if (columnWidths[file.id]) columnWidths[file.id].push(180);
+                            file.rows.forEach(r => {
+                                while (r.length < file.headers.length) r.push('');
+                            });
+                        }
+
+                        file.rows[targetRowIndex][targetColIndex] = cellVal.replace(/^["']|["']$/g, '');
+                    });
+                });
+
+                file.rows.forEach(r => {
+                    while (r.length < file.headers.length) r.push('');
+                });
+
+                saveToLocalStorage();
+                renderActiveView();
+                showToast(`Pasted ${lines.length} row(s) into workspace table`);
+            }
+        }
+
         function renderActiveView() {
             const file = getActiveFile();
             if (!file) return;
@@ -642,7 +693,6 @@
             else renderTabularView();
         }
 
-        // Column Drag & Drop Reordering
         let draggedColIdx = null;
         function handleColDragStart(e, colIdx) {
             draggedColIdx = colIdx;
@@ -653,17 +703,14 @@
             const file = getActiveFile();
             if (!file) return;
 
-            // Move header
             const movedHeader = file.headers.splice(draggedColIdx, 1)[0];
             file.headers.splice(targetIdx, 0, movedHeader);
 
-            // Move column data in every row
             file.rows.forEach(row => {
                 const movedVal = row.splice(draggedColIdx, 1)[0];
                 row.splice(targetIdx, 0, movedVal);
             });
 
-            // Move column width
             if (columnWidths[file.id]) {
                 const movedW = columnWidths[file.id].splice(draggedColIdx, 1)[0];
                 columnWidths[file.id].splice(targetIdx, 0, movedW);
@@ -672,10 +719,9 @@
             draggedColIdx = null;
             saveToLocalStorage();
             renderTabularView();
-            showToast("Column reordered successfully");
+            showToast("Column reordered");
         }
 
-        // Column Resizing logic
         let resizingColIdx = null;
         let startX = 0;
         let startWidth = 0;
@@ -705,7 +751,6 @@
             saveToLocalStorage();
         }
 
-        // Row Reordering
         function moveRow(rowIdx, direction) {
             const file = getActiveFile();
             if (!file) return;
@@ -720,13 +765,11 @@
             renderActiveView();
         }
 
-        // Auto expand textarea
         function autoExpand(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = (textarea.scrollHeight) + 'px';
         }
 
-        // Vertical View
         function renderVerticalView() {
             const file = getActiveFile();
             const wrapper = document.getElementById('verticalRecordsWrapper');
@@ -745,14 +788,14 @@
                 return;
             }
 
-            wrapper.innerHTML = matched.map(({ row, origIdx }, displayIdx) => {
+            wrapper.innerHTML = matched.map(({ row, origIdx }) => {
                 let fieldsHtml = '';
                 file.headers.forEach((h, colIdx) => {
                     const val = row[colIdx] !== undefined ? row[colIdx] : '';
                     fieldsHtml += `
                         <div class="space-y-1">
                             <label class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">${escapeHtml(h)}</label>
-                            <textarea rows="1" oninput="autoExpand(this); updateCell(${origIdx}, ${colIdx}, this.value)" class="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333333] rounded-lg p-2 text-xs font-mono cell-wrap resize-none focus:outline-none focus:ring-1 focus:ring-blue-500">${escapeHtml(val)}</textarea>
+                            <textarea rows="1" onpaste="handleTablePaste(event, ${origIdx}, ${colIdx})" oninput="autoExpand(this); updateCell(${origIdx}, ${colIdx}, this.value)" class="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333333] rounded-lg p-2 text-xs font-mono cell-wrap resize-none focus:outline-none focus:ring-1 focus:ring-blue-500">${escapeHtml(val)}</textarea>
                         </div>
                     `;
                 });
@@ -773,7 +816,6 @@
             }).join('');
         }
 
-        // Data Edits
         function updateCell(rowIdx, colIdx, val) {
             const file = getActiveFile();
             if (!file) return;
@@ -825,7 +867,7 @@
             const file = getActiveFile();
             if (!file) return;
             if (file.headers.length <= 1) {
-                showToast("Cannot delete the last remaining column.", "error");
+                showToast("Cannot delete the only column.", "error");
                 return;
             }
             file.headers.splice(colIdx, 1);
@@ -845,7 +887,7 @@
         }
 
         function clearAllFiles() {
-            if (!confirm("Are you sure you want to clear all workspace files?")) return;
+            if (!confirm("Clear all files from current workspace?")) return;
             workspaceFiles = [];
             activeFileId = null;
             saveToLocalStorage();
@@ -853,16 +895,101 @@
             showToast("Workspace cleared", "error");
         }
 
-        // Copy Modal
+        function openZipExportModal() {
+            if (workspaceFiles.length === 0) {
+                showToast("No files available for export.", "error");
+                return;
+            }
+
+            const listContainer = document.getElementById('zipExportFilesList');
+            const istDateStr = new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+            }).format(new Date()).replace(/[/:\s]/g, '_');
+
+            document.getElementById('zipArchiveNameInput').value = `oracle_studio_export_${istDateStr}`;
+
+            listContainer.innerHTML = workspaceFiles.map((file, idx) => {
+                const baseName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+                const format = file.type || 'dat';
+
+                return `
+                    <div class="flex items-center gap-3 bg-white dark:bg-[#252526] p-2.5 rounded-lg border border-slate-200 dark:border-[#333333]">
+                        <input type="checkbox" id="zip_file_chk_${idx}" checked class="rounded border-slate-300 dark:border-[#333333] text-blue-600 focus:ring-blue-500 cursor-pointer">
+                        <input type="hidden" id="zip_file_id_${idx}" value="${file.id}">
+                        <div class="flex-1 flex items-center gap-2">
+                            <input type="text" id="zip_file_name_${idx}" value="${escapeHtml(baseName)}" class="flex-1 px-2.5 py-1 bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333333] rounded text-xs font-mono focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <select id="zip_file_format_${idx}" class="px-2 py-1 bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333333] rounded text-xs font-mono focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                <option value="dat" ${format === 'dat' ? 'selected' : ''}>.dat</option>
+                                <option value="csv" ${format === 'csv' ? 'selected' : ''}>.csv</option>
+                                <option value="xlsx" ${format === 'xlsx' ? 'selected' : ''}>.xlsx</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('zipExportModal').classList.remove('hidden');
+        }
+
+        function closeZipExportModal() {
+            document.getElementById('zipExportModal').classList.add('hidden');
+        }
+
+        async function generateCustomZipExport() {
+            const zip = new JSZip();
+            let selectedCount = 0;
+
+            for (let i = 0; i < workspaceFiles.length; i++) {
+                const chk = document.getElementById(`zip_file_chk_${i}`);
+                if (chk && chk.checked) {
+                    const fileId = document.getElementById(`zip_file_id_${i}`).value;
+                    const nameInput = document.getElementById(`zip_file_name_${i}`).value.trim() || 'file';
+                    const format = document.getElementById(`zip_file_format_${i}`).value;
+                    const file = workspaceFiles.find(f => f.id === fileId);
+
+                    if (file) {
+                        selectedCount++;
+                        const fullFileName = `${nameInput}.${format}`;
+
+                        if (format === 'xlsx') {
+                            const wsData = [file.headers, ...file.rows];
+                            const ws = XLSX.utils.aoa_to_sheet(wsData);
+                            const wb = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+                            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                            zip.file(fullFileName, wbout);
+                        } else {
+                            const delimiter = format === 'csv' ? ',' : '|';
+                            let content = file.headers.join(delimiter) + '\n';
+                            content += file.rows.map(r => r.join(delimiter)).join('\n');
+                            zip.file(fullFileName, content);
+                        }
+                    }
+                }
+            }
+
+            if (selectedCount === 0) {
+                showToast("Select at least one file.", "error");
+                return;
+            }
+
+            let zipName = document.getElementById('zipArchiveNameInput').value.trim() || 'oracle_export_files';
+            if (!zipName.toLowerCase().endsWith('.zip')) zipName += '.zip';
+
+            const blob = await zip.generateAsync({ type: "blob" });
+            saveAs(blob, zipName);
+            closeZipExportModal();
+            showToast(`Generated ZIP containing ${selectedCount} file(s)`);
+        }
+
         function openCopyModal() {
             const file = getActiveFile();
             if (!file) return;
             document.getElementById('copyModal').classList.remove('hidden');
             updateCopyTextContent();
         }
-        function closeCopyModal() {
-            document.getElementById('copyModal').classList.add('hidden');
-        }
+        function closeCopyModal() { document.getElementById('copyModal').classList.add('hidden'); }
         function updateCopyTextContent() {
             const file = getActiveFile();
             if (!file) return;
@@ -876,11 +1003,10 @@
             const textarea = document.getElementById('copyTextarea');
             textarea.select();
             document.execCommand('copy');
-            showToast("Data copied to clipboard!");
+            showToast("Copied to clipboard!");
             closeCopyModal();
         }
 
-        // Modals
         function createNewFileModal() { document.getElementById('newFileModal').classList.remove('hidden'); }
         function closeNewFileModal() { document.getElementById('newFileModal').classList.add('hidden'); }
         function confirmCreateNewFile() {
@@ -899,7 +1025,7 @@
             saveToLocalStorage();
             closeNewFileModal();
             renderTabs();
-            showToast("New file created");
+            showToast("File created");
         }
 
         function openImportModal() { document.getElementById('importModal').classList.remove('hidden'); }
@@ -908,15 +1034,15 @@
 
         async function loadFromGitHubPromptType() {
             const url = document.getElementById('githubUrlInput').value.trim();
-            if (!url) { showToast("Please enter a valid GitHub raw URL.", "error"); return; }
+            if (!url) { showToast("Enter a valid URL.", "error"); return; }
             try {
                 const res = await fetch(url);
-                if (!res.ok) throw new Error("Network response was not ok");
+                if (!res.ok) throw new Error("Request failed");
                 pendingGitHubContent = await res.text();
                 closeImportModal();
                 document.getElementById('fileTypePromptModal').classList.remove('hidden');
             } catch (e) {
-                showToast("Failed to fetch file from GitHub. Check URL.", "error");
+                showToast("Failed to fetch from URL.", "error");
             }
         }
 
@@ -924,7 +1050,7 @@
             if (!pendingGitHubContent) return;
             parseAndLoadContent(pendingGitHubContent, 'GitHub_Data.' + fileType, fileType);
             closeFileTypePrompt();
-            showToast("GitHub file imported successfully");
+            showToast("Imported successfully");
         }
 
         function handleLocalFileUpload(event) {
@@ -939,7 +1065,7 @@
                     const workbook = XLSX.read(data, { type: 'array' });
                     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
                     const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-                    if (json.length === 0) { showToast("Excel file is empty.", "error"); return; }
+                    if (json.length === 0) { showToast("Sheet is empty.", "error"); return; }
                     const headers = json[0].map(h => String(h || ''));
                     const rows = json.slice(1).map(r => headers.map((_, i) => String(r[i] !== undefined ? r[i] : '')));
                     
@@ -948,7 +1074,7 @@
                     saveToLocalStorage();
                     closeImportModal();
                     renderTabs();
-                    showToast("Excel file imported");
+                    showToast("Excel document imported");
                 };
                 reader.readAsArrayBuffer(file);
             } else {
@@ -956,7 +1082,7 @@
                 reader.onload = function(e) {
                     parseAndLoadContent(e.target.result, file.name, ext === 'csv' ? 'csv' : 'dat');
                     closeImportModal();
-                    showToast("File imported");
+                    showToast("Text file imported");
                 };
                 reader.readAsText(file);
             }
@@ -1008,11 +1134,11 @@
                 const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
                 saveAs(blob, filename);
             }
-            showToast("File exported successfully");
+            showToast("Export completed");
         }
 
         function exportWorkspaceZip() {
-            if (workspaceFiles.length === 0) { showToast("No files to backup.", "error"); return; }
+            if (workspaceFiles.length === 0) { showToast("Workspace is empty.", "error"); return; }
             const zip = new JSZip();
             workspaceFiles.forEach(file => {
                 const delimiter = file.type === 'csv' ? ',' : '|';
@@ -1027,7 +1153,7 @@
 
             zip.generateAsync({ type: "blob" }).then(function(content) {
                 saveAs(content, `Oracle_Studio_Backup_${istDateStr}.zip`);
-                showToast("Workspace backup downloaded");
+                showToast("Workspace backup saved");
             });
         }
 
@@ -1058,8 +1184,8 @@
                 if (workspaceFiles.length > 0) activeFileId = workspaceFiles[0].id;
                 saveToLocalStorage();
                 renderTabs();
-                showToast("Workspace restored successfully");
-            }).catch(err => { showToast("Failed to read ZIP archive.", "error"); });
+                showToast("Workspace restored");
+            }).catch(err => { showToast("Could not parse ZIP file.", "error"); });
         }
 
         function escapeHtml(str) {
