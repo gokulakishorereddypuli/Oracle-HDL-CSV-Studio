@@ -58,7 +58,7 @@
             <i class="fa-solid fa-expand"></i> Edit Raw File (.dat / .csv)
         </button>
         <button onclick="openXsdSchemaModalForTab()" class="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-[#2a2d2e] flex items-center gap-2 text-purple-600 dark:text-purple-400 font-medium">
-            <i class="fa-solid fa-code"></i> Generate OIC XSD Schema
+            <i class="fa-solid fa-code"></i> Generate OIC NXSD Schema
         </button>
         <div class="h-px bg-slate-200 dark:bg-[#333333] my-1"></div>
         <button onclick="openDuplicateModalForTab()" class="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-[#2a2d2e] flex items-center gap-2">
@@ -81,7 +81,7 @@
             <div>
                 <h1 class="font-bold text-base leading-tight tracking-tight flex items-center gap-2">
                     Oracle HDL & CSV Studio
-                    <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">v1.0</span>
+                    <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">v5.5</span>
                 </h1>
                 <p class="text-xs text-slate-500 dark:text-slate-400">Multi-File Workspace & OIC Integration Studio</p>
             </div>
@@ -105,8 +105,8 @@
 
             <!-- Action Buttons -->
             <div class="flex items-center space-x-2">
-                <button onclick="openXsdSchemaModal()" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-medium shadow-sm transition-all flex items-center gap-1.5" title="Generate OIC Stage File XSD Schema">
-                    <i class="fa-solid fa-code"></i> OIC XSD Generator
+                <button onclick="openXsdSchemaModal()" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-medium shadow-sm transition-all flex items-center gap-1.5" title="Generate OIC Stage File NXSD Schema">
+                    <i class="fa-solid fa-code"></i> OIC NXSD Generator
                 </button>
                 <button onclick="openZipExportModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium shadow-sm transition-all flex items-center gap-1.5" title="Download ZIP Archive (.dat / .csv / .xlsx)">
                     <i class="fa-solid fa-file-archive"></i> Download Files
@@ -183,8 +183,8 @@
                     <button onclick="addColumn()" class="px-2.5 py-1 bg-slate-100 dark:bg-[#333333] hover:bg-slate-200 dark:hover:bg-[#3c3c3c] border border-slate-200 dark:border-[#333333] rounded-lg text-xs font-medium flex items-center gap-1">
                         <i class="fa-solid fa-plus text-blue-500"></i> Column
                     </button>
-                    <button onclick="openXsdSchemaModal(activeFileId)" class="px-2.5 py-1 bg-purple-100 dark:bg-purple-900/30 hover:bg-purple-200 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 rounded-lg text-xs font-medium flex items-center gap-1" title="Generate XSD Schema for OIC Stage File Operation">
-                        <i class="fa-solid fa-file-code"></i> OIC XSD
+                    <button onclick="openXsdSchemaModal(activeFileId)" class="px-2.5 py-1 bg-purple-100 dark:bg-purple-900/30 hover:bg-purple-200 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 rounded-lg text-xs font-medium flex items-center gap-1" title="Generate NXSD Schema for OIC Stage File Operation">
+                        <i class="fa-solid fa-file-code"></i> OIC NXSD
                     </button>
                     <button onclick="openFullScreenEditorModal(activeFileId)" class="px-2.5 py-1 bg-slate-100 dark:bg-[#333333] hover:bg-slate-200 dark:hover:bg-[#3c3c3c] border border-slate-200 dark:border-[#333333] rounded-lg text-xs font-medium flex items-center gap-1 text-purple-500" title="Full Screen Raw Editor">
                         <i class="fa-solid fa-pen-to-square"></i> Raw Editor
@@ -212,7 +212,7 @@
                                 <i class="fa-solid fa-file-excel text-emerald-500"></i> Excel Workbook (.xlsx)
                             </button>
                             <button onclick="exportFile('xsd', false)" class="w-full text-left px-3 py-1.5 text-xs hover:bg-slate-100 dark:hover:bg-[#2a2d2e] flex items-center gap-2 border-b border-slate-200 dark:border-[#333333] text-purple-600 dark:text-purple-400 pb-2">
-                                <i class="fa-solid fa-code"></i> OIC XSD Schema (.xsd)
+                                <i class="fa-solid fa-code"></i> OIC NXSD Schema (.xsd)
                             </button>
 
                             <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 pt-2">Save To Preferred Folder</div>
@@ -270,11 +270,11 @@
         <div class="flex-none h-14 bg-white dark:bg-[#252526] border-b border-slate-200 dark:border-[#333333] px-6 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <i class="fa-solid fa-code text-purple-500 text-lg"></i>
-                <h2 id="xsdModalTitle" class="font-bold text-sm">OIC Stage File XSD Schema Generator</h2>
+                <h2 id="xsdModalTitle" class="font-bold text-sm">OIC Stage File NXSD Schema Generator (Piped Format)</h2>
             </div>
             <div class="flex items-center space-x-3">
                 <button onclick="copyXsdToClipboard()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm flex items-center gap-1.5">
-                    <i class="fa-solid fa-copy"></i> Copy XSD Schema
+                    <i class="fa-solid fa-copy"></i> Copy NXSD Schema
                 </button>
                 <button onclick="downloadXsdFile(false)" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-medium shadow-sm flex items-center gap-1.5">
                     <i class="fa-solid fa-download"></i> Download (.xsd)
@@ -295,9 +295,9 @@
                 </div>
                 <p class="text-purple-700 dark:text-purple-400 leading-relaxed">
                     1. In OIC, add a <strong>Stage File</strong> action and choose <strong>Write File</strong> operation.<br>
-                    2. Select <strong>XML Schema (XSD)</strong> as the schema format type.<br>
-                    3. Download or copy this generated XSD schema and upload it in the OIC wizard.<br>
-                    4. Map your source payload to this generated structure. OIC will output valid pipe/comma-delimited HDL or CSV files automatically.
+                    2. Select <strong>Sample NXSD Schema</strong> as the schema format type.<br>
+                    3. Download or copy this generated NXSD schema and upload it in the OIC wizard.<br>
+                    4. Map your source payload to this generated structure. OIC will output valid pipe-delimited (.dat) files separated by <code>|</code> and ended with <code>${eol}</code> automatically.
                 </p>
             </div>
 
@@ -622,8 +622,9 @@
                     type: 'dat',
                     headers: ['METADATA', 'Worker', 'EffectiveStartDate', 'SourceSystemId'],
                     rows: [
-                        ['METADATA', 'Worker', '2023/01/01', 'EMP1001'],
-                        ['METADATA', 'Worker', '2023/06/15', 'EMP1002']
+                        ['METADATA', 'Worker', 'EffectiveStartDate', 'SourceSystemId'],
+                        ['MERGE', 'Worker', '2023/01/01', 'EMP1001'],
+                        ['MERGE', 'Worker', '2023/06/15', 'EMP1002']
                     ],
                     viewMode: 'tabular'
                 });
@@ -1423,10 +1424,11 @@
             showToast("Raw changes saved and parsed into view!");
         }
 
-        // ==========================================
-        // MULTILEVEL OIC HDL TO XSD SCHEMA GENERATOR
-        // FIXED: Explicitly includes METADATA, MERGE, & DELETE columns
-        // ==========================================
+        // =========================================================================
+        // MULTILEVEL OIC HDL TO NXSD SCHEMA GENERATOR
+        // Formats mapper XML payload directly into pipe-delimited (.dat) files
+        // Supports METADATA, MERGE, & DELETE repeating structures with custom ${eol}
+        // =========================================================================
         function generateXsdSchemaForFile(file) {
             if (!file || !file.rows || file.rows.length === 0) return '';
 
@@ -1439,55 +1441,88 @@
             const baseName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
             const rootEntityName = sanitizeXmlTag(baseName);
 
-            // Group rows by object discriminator type (e.g. METADATA|Worker vs METADATA|PersonName)
-            const hierarchyMap = {};
-
-            // Detect column indexes for METADATA lines
+            // Group metadata types dynamically based on table rows
+            const metadataGroups = {};
             const metadataIdx = file.headers.findIndex(h => h.toUpperCase() === 'METADATA');
-            const objectTypeIdx = metadataIdx !== -1 ? metadataIdx + 1 : 0;
+            const objectTypeIdx = metadataIdx !== -1 ? metadataIdx + 1 : 1;
 
-            // Process table data to discover all object structures dynamically
             file.rows.forEach(row => {
-                const objType = row[objectTypeIdx] || rootEntityName;
-                const cleanObjType = sanitizeXmlTag(objType);
+                const isMetadataRow = row[0] && row[0].toUpperCase() === 'METADATA';
+                if (isMetadataRow || Object.keys(metadataGroups).length === 0) {
+                    const objType = row[objectTypeIdx] || rootEntityName;
+                    const cleanObjType = sanitizeXmlTag(objType);
 
-                if (!hierarchyMap[cleanObjType]) {
-                    hierarchyMap[cleanObjType] = new Set();
-                }
-
-                file.headers.forEach((header, colIdx) => {
-                    if (row[colIdx] !== undefined && row[colIdx] !== '') {
-                        hierarchyMap[cleanObjType].add(sanitizeXmlTag(header));
+                    if (!metadataGroups[cleanObjType]) {
+                        metadataGroups[cleanObjType] = new Set();
                     }
-                });
+
+                    file.headers.forEach((header, colIdx) => {
+                        if (row[colIdx] !== undefined && row[colIdx] !== '') {
+                            metadataGroups[cleanObjType].add(sanitizeXmlTag(header));
+                        }
+                    });
+                }
             });
 
-            // Fallback if no distinct object discriminators were identified
-            if (Object.keys(hierarchyMap).length === 0) {
-                hierarchyMap[rootEntityName] = new Set(
-                    file.headers.map(sanitizeXmlTag)
-                );
+            if (Object.keys(metadataGroups).length === 0) {
+                metadataGroups[rootEntityName] = new Set(file.headers.map(sanitizeXmlTag));
             }
 
-            const objectKeys = Object.keys(hierarchyMap);
+            const objectKeys = Object.keys(metadataGroups);
 
             let xsd = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-            xsd += `<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">\n`;
-            xsd += `  <!-- Oracle Integration Cloud (OIC) Multilevel Stage File Operations Schema -->\n`;
+            xsd += `<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"\n`;
+            xsd += `           xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"\n`;
+            xsd += `           xmlns:tns="http://xmlns.oracle.com/pcbpel/nxsd/${rootEntityName}"\n`;
+            xsd += `           targetNamespace="http://xmlns.oracle.com/pcbpel/nxsd/${rootEntityName}"\n`;
+            xsd += `           elementFormDefault="qualified"\n`;
+            xsd += `           attributeFormDefault="unqualified"\n`;
+            xsd += `           nxsd:version="nxfile"\n`;
+            xsd += `           nxsd:type="delimited"\n`;
+            xsd += `           nxsd:stream="chars"\n`;
+            xsd += `           nxsd:encoding="UTF-8">\n\n`;
+
+            xsd += `  <!-- Oracle Integration Cloud (OIC) Pipe-Delimited NXSD Template File -->\n`;
             xsd += `  <xs:element name="${rootEntityName}File">\n`;
             xsd += `    <xs:complexType>\n`;
             xsd += `      <xs:sequence>\n`;
 
-            // Generate XML schema structure for each hierarchical object block
             objectKeys.forEach(objName => {
-                xsd += `        <xs:element name="${objName}" minOccurs="0" maxOccurs="unbounded">\n`;
+                xsd += `        <!-- METADATA Record Group: ${objName} -->\n`;
+                xsd += `        <xs:element name="${objName}Group" minOccurs="0" maxOccurs="unbounded">\n`;
                 xsd += `          <xs:complexType>\n`;
                 xsd += `            <xs:sequence>\n`;
 
-                const fields = Array.from(hierarchyMap[objName]);
-                fields.forEach(field => {
-                    xsd += `              <xs:element name="${field}" type="xs:string" minOccurs="0" nillable="true"/>\n`;
+                // Single Metadata Header Definition Row
+                xsd += `              <xs:element name="${objName}MetadataHeader" minOccurs="0" maxOccurs="1" nxsd:cellSeparatedBy="|" nxsd:arrayTerminatedBy="\${eol}">\n`;
+                xsd += `                <xs:complexType>\n`;
+                xsd += `                  <xs:sequence>\n`;
+
+                const fields = Array.from(metadataGroups[objName]);
+                fields.forEach((field, index) => {
+                    const isLast = index === fields.length - 1;
+                    const sepAttr = isLast ? `nxsd:target="${field}"` : `nxsd:style="terminated" nxsd:terminatedBy="|"`;
+                    xsd += `                    <xs:element name="${field}" type="xs:string" ${sepAttr}/>\n`;
                 });
+
+                xsd += `                  </xs:sequence>\n`;
+                xsd += `                </xs:complexType>\n`;
+                xsd += `              </xs:element>\n`;
+
+                // Repeating MERGE or DELETE Data Rows
+                xsd += `              <xs:element name="${objName}DataRecord" minOccurs="0" maxOccurs="unbounded" nxsd:cellSeparatedBy="|" nxsd:arrayTerminatedBy="\${eol}">\n`;
+                xsd += `                <xs:complexType>\n`;
+                xsd += `                  <xs:sequence>\n`;
+
+                fields.forEach((field, index) => {
+                    const isLast = index === fields.length - 1;
+                    const sepAttr = isLast ? `nxsd:target="${field}"` : `nxsd:style="terminated" nxsd:terminatedBy="|"`;
+                    xsd += `                    <xs:element name="${field}" type="xs:string" ${sepAttr}/>\n`;
+                });
+
+                xsd += `                  </xs:sequence>\n`;
+                xsd += `                </xs:complexType>\n`;
+                xsd += `              </xs:element>\n`;
 
                 xsd += `            </xs:sequence>\n`;
                 xsd += `          </xs:complexType>\n`;
@@ -1513,7 +1548,7 @@
             xsdTargetFileId = file.id;
             const xsdContent = generateXsdSchemaForFile(file);
 
-            document.getElementById('xsdModalTitle').textContent = `OIC Stage File XSD Schema: ${file.name}`;
+            document.getElementById('xsdModalTitle').textContent = `OIC Stage File NXSD Schema: ${file.name}`;
             document.getElementById('xsdOutputTextarea').value = xsdContent;
             document.getElementById('xsdSchemaModal').classList.remove('hidden');
         }
@@ -1527,7 +1562,7 @@
             const textarea = document.getElementById('xsdOutputTextarea');
             textarea.select();
             document.execCommand('copy');
-            showToast("XSD Schema copied to clipboard!");
+            showToast("NXSD Schema copied to clipboard!");
         }
 
         async function saveBlobWithPicker(blob, defaultFilename) {
@@ -1710,7 +1745,10 @@
                 name,
                 type,
                 headers: ['METADATA', 'Object', 'EffectiveStartDate', 'SourceSystemId'],
-                rows: [['METADATA', 'Object', '2023/01/01', 'SS_ID_1']],
+                rows: [
+                    ['METADATA', 'Object', 'EffectiveStartDate', 'SourceSystemId'],
+                    ['MERGE', 'Object', '2023/01/01', 'SS_ID_1']
+                ],
                 viewMode: 'tabular'
             };
             workspaceFiles.push(newFile);
