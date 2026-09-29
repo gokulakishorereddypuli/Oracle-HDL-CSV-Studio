@@ -1457,9 +1457,9 @@
                     }
 
                     file.headers.forEach((header, colIdx) => {
-                        if (row[colIdx] !== undefined && row[colIdx] !== '') {
+                        //if (row[colIdx] !== undefined && row[colIdx] !== '') {
                             metadataGroups[cleanObjType].add(sanitizeXmlTag(header));
-                        }
+                        //}
                     });
                 }
             });
