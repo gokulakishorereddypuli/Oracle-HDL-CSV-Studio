@@ -1501,7 +1501,8 @@
                 const fields = Array.from(metadataGroups[objName]);
                 fields.forEach((field, index) => {
                     const isLast = index === fields.length - 1;
-                    const sepAttr = isLast ? `nxsd:target="${field}"` : `nxsd:style="terminated" nxsd:terminatedBy="|"`;
+                    //const sepAttr = isLast ? `nxsd:target="${field}"` : `nxsd:style="terminated" nxsd:terminatedBy="|"`;
+                    const sepAttr = isLast ? `nxsd:style="terminated" nxsd:terminatedBy="${eol}"` : `nxsd:style="terminated" nxsd:terminatedBy="|"`;
                     xsd += `                    <xs:element name="${field}" type="xs:string" ${sepAttr}/>\n`;
                 });
 
